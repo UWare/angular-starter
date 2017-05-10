@@ -1,36 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { ApplicationRef, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {
-  NgModule,
-  ApplicationRef
-} from '@angular/core';
-import {
-  removeNgStyles,
-  createNewHosts,
-  createInputTransfer
-} from '@angularclass/hmr';
-import {
-  RouterModule,
-  PreloadAllModules
-} from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { PreloadAllModules, RouterModule } from '@angular/router';
+import { createInputTransfer, createNewHosts, removeNgStyles } from '@angularclass/hmr';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+import '../styles/headings.css';
 
+import '../styles/styles.scss';
+// App is our top level component
+import { AppComponent } from './app.component';
+import { APP_RESOLVER_PROVIDERS } from './app.resolver';
+import { ROUTES } from './app.routes';
+import { AppState, InternalStateType } from './app.service';
 /*
  * Platform and Environment providers/directives/pipes
  */
 import { ENV_PROVIDERS } from './environment';
-import { ROUTES } from './app.routes';
-// App is our top level component
-import { AppComponent } from './app.component';
-import { APP_RESOLVER_PROVIDERS } from './app.resolver';
-import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
-import { AboutComponent } from './about';
+import { ProjectListComponent } from './home/project-list/project-list.component';
 import { NoContentComponent } from './no-content';
-import { XLargeDirective } from './home/x-large';
-
-import '../styles/styles.scss';
-import '../styles/headings.css';
+import { CounterComponent } from './home/counter.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -51,16 +41,17 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
     HomeComponent,
     NoContentComponent,
-    XLargeDirective
+    ProjectListComponent,
+    CounterComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    DragulaModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
